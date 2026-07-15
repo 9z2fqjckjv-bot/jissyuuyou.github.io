@@ -1,203 +1,508 @@
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 8mm;
-  }
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LITALICOワークスの場所一覧</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe3ee;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
 
-  html, body {
-    width: 210mm;
-    height: 297mm;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    background: #fff !important;
-    padding: 0 !important;
-    margin: 0;
-    color: #000;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .container {
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-    max-width: none;
-    width: 100%;
-  }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px, var(--bg) 100%);
+      line-height: 1.7;
+    }
 
-  .hero {
-    background: #fff !important;
-    color: #000 !important;
-    border-bottom: 1px solid #000;
-    padding: 6mm 0 3mm !important;
-  }
+    a {
+      color: var(--accent);
+    }
 
-  h1 {
-    font-size: 15px;
-    margin: 0;
-    line-height: 1.2;
-  }
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 32px auto 56px;
+      background: var(--surface);
+      border: 1px solid rgba(219, 227, 238, 0.9);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
 
-  .subtitle {
-    color: #000 !important;
-    font-size: 10px;
-    margin-top: 2px;
-    line-height: 1.2;
-  }
+    .hero {
+      padding: 40px 40px 28px;
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #60a5fa 100%);
+      color: #fff;
+    }
 
-  .section {
-    padding: 3mm 0 !important;
-  }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(28px, 3.6vw, 40px);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
 
-  h2 {
-    color: #000;
-    border-left: 3px solid #000;
-    font-size: 12px;
-    margin: 0 0 2mm;
-    padding-left: 6px;
-    line-height: 1.2;
-  }
+    .subtitle {
+      margin: 12px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+    }
 
-  /* 地図を印刷時だけ小さく */
-  .map-wrap {
-    border: 1px solid #000;
-    box-shadow: none;
-    border-radius: 0;
-  }
+    .content {
+      padding: 28px 40px 40px;
+    }
 
-  .map-wrap iframe {
-    min-height: 0 !important;
-    height: 68mm !important;
-    width: 100% !important;
-  }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
 
-  .table-wrap {
-    border: 1px solid #000;
-    border-radius: 0;
-    overflow: hidden;
-  }
+    .summary-card {
+      padding: 18px 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
 
-  table {
-    min-width: 0 !important;
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    font-size: 9.5px;     /* 印刷時のみ縮小 */
-    line-height: 1.2;     /* 印刷時のみ詰める */
-  }
+    .summary-card .label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
 
-  thead th,
-  tbody td {
-    border-color: #000;
-    padding: 2px 4px;     /* 印刷時のみ余白縮小 */
-    word-break: break-word;
-    overflow-wrap: anywhere;
-    white-space: normal;
-  }
+    .summary-card .value {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
 
-  td:first-child,
-  th:first-child {
-    width: 9%;
-  }
+    .section {
+      margin-top: 28px;
+    }
 
-  .footer-note {
-    display: none;
-  }
+    h2 {
+      margin: 0 0 14px;
+      padding-left: 12px;
+      border-left: 5px solid var(--accent);
+      font-size: 22px;
+      line-height: 1.3;
+    }
 
-  /* 1ページに収めるためページ分割を無効化 */
-  .page-break {
-    display: none !important;
-    break-after: auto !important;
-    page-break-after: auto !important;
-  }
+    .section-note {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-  /* 不要な装飾を無効化 */
-  tbody tr:nth-child(even),
-  tbody tr:hover {
-    background: transparent !important;
-  }
-}
+    .map-wrap {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      background: #fff;
+    }
 
-<h1>LITALICOワークスの場所一覧</h1>
-<h2>地図</h2>
-<iframe src="https://www.google.com/maps/d/embed?mid=1nfhCKbug05vR3zuyYrw6c5UsgBkGDpc&ehbc=2E312F" width="640" height="480"></iframe>
-<h2>詳細一覧表</h2>
-<table border="1">
-  <thead>
-    <tr>
-      <th>センター名</th>
-      <th>住所</th>
-      <th>電話番号</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>LITALICOワークス さいたま浦和</td>
-      <td>埼玉県さいたま市中央区新中里1-3-3 埼大通りメディカルビル4F</td>
-      <td>048-835-3047</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 大宮</td>
-      <td>埼玉県さいたま市大宮区下町1-42-2 TS-5BLDG. 5F</td>
-      <td>048-658-0061</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 所沢</td>
-      <td>埼玉県所沢市宮本町2-11-11 MOA5 1F</td>
-      <td>04-2929-5221</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 南越谷</td>
-      <td>埼玉県越谷市南越谷1-2875-2 南越谷ローヤルコーポ1F</td>
-      <td>048-990-1538</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 和光</td>
-      <td>埼玉県和光市本町1-17 斎藤ビル3F</td>
-      <td>048-452-4478</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 大宮西口</td>
-      <td>埼玉県さいたま市大宮区桜木町2-474 グランファースト大宮1F</td>
-      <td>048-650-3601</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 川越</td>
-      <td>埼玉県川越市脇田本町14-38 YKB川越 4F</td>
-      <td>049-249-8705</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 春日部</td>
-      <td>埼玉県春日部市中央1-3-3 アーバンビル1F</td>
-      <td>048-763-7412</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 川口</td>
-      <td>埼玉県川口市栄町3-1-14 川口三栄ビル6F D号室</td>
-      <td>048-229-1210</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 草加</td>
-      <td>埼玉県草加市高砂2-9-2 アコス北館Nビル5F</td>
-      <td>048-920-6821</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LITALICOワークス 武蔵浦和</td>
-      <td>埼玉県さいたま市南区沼影1-10-1 ラムザ4F</td>
-      <td>048-829-9425</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      min-height: 460px;
+      border: 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fcfdff;
+    }
+
+    tbody tr:hover {
+      background: var(--accent-soft);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .name {
+      font-weight: 700;
+    }
+
+    .address {
+      color: #374151;
+    }
+
+    .phone a {
+      color: inherit;
+      text-decoration: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .phone a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .action {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: #fff;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #eff6ff;
+      transform: translateY(-1px);
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: min(100%, calc(100% - 16px));
+        margin: 16px auto 32px;
+        border-radius: 18px;
+      }
+
+      .hero,
+      .content {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero {
+        padding-top: 28px;
+        padding-bottom: 22px;
+      }
+
+      .map-wrap iframe {
+        min-height: 320px;
+      }
+
+      table {
+        min-width: 680px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 8mm;
+      }
+
+      html, body {
+        width: 210mm;
+        height: 297mm;
+      }
+
+      body {
+        background: #fff !important;
+        padding: 0 !important;
+        margin: 0;
+        color: #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .container {
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        max-width: none;
+        width: 100%;
+        margin: 0;
+      }
+
+      .hero {
+        background: #fff !important;
+        color: #000 !important;
+        border-bottom: 1px solid #000;
+        padding: 6mm 0 3mm !important;
+      }
+
+      h1 {
+        font-size: 15px;
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        color: #000 !important;
+        font-size: 10px;
+        margin-top: 2px;
+        line-height: 1.2;
+      }
+
+      .content,
+      .section {
+        padding: 0;
+        margin-top: 3mm;
+      }
+
+      .summary,
+      .footer-note {
+        display: none !important;
+      }
+
+      h2 {
+        color: #000;
+        border-left: 3px solid #000;
+        font-size: 12px;
+        margin: 0 0 2mm;
+        padding-left: 6px;
+        line-height: 1.2;
+      }
+
+      .section-note {
+        font-size: 9px;
+        color: #000;
+        margin-bottom: 2mm;
+      }
+
+      .map-wrap {
+        border: 1px solid #000;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .map-wrap iframe {
+        min-height: 0 !important;
+        height: 68mm !important;
+        width: 100% !important;
+      }
+
+      .table-wrap {
+        border: 1px solid #000;
+        border-radius: 0;
+        overflow: hidden;
+      }
+
+      table {
+        min-width: 0 !important;
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 9.5px;
+        line-height: 1.2;
+      }
+
+      thead th,
+      tbody td {
+        border-color: #000;
+        padding: 2px 4px;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        white-space: normal;
+      }
+
+      thead th {
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      td:first-child,
+      th:first-child {
+        width: 22%;
+      }
+
+      .action,
+      .btn {
+        display: none !important;
+      }
+
+      tbody tr:nth-child(even),
+      tbody tr:hover {
+        background: transparent !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <h1>LITALICOワークスの場所一覧</h1>
+      <p class="subtitle">埼玉県内の拠点を、地図と一覧表で見やすくまとめています。</p>
+    </header>
+
+    <div class="content">
+      <section class="summary" aria-label="概要">
+        <div class="summary-card">
+          <span class="label">掲載拠点数</span>
+          <span class="value">11</span>
+        </div>
+        <div class="summary-card">
+          <span class="label">エリア</span>
+          <span class="value">埼玉県</span>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="map-heading">
+        <h2 id="map-heading">地図</h2>
+        <p class="section-note">位置関係を確認したい場合は地図をご利用ください。</p>
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/d/embed?mid=1nfhCKbug05vR3zuyYrw6c5UsgBkGDpc&ehbc=2E312F"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="LITALICOワークス 埼玉県内拠点マップ">
+          </iframe>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="table-heading">
+        <h2 id="table-heading">詳細一覧表</h2>
+        <p class="section-note">電話番号はタップで発信できます。地図リンクからGoogleマップ検索も可能です。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">センター名</th>
+                <th scope="col">住所</th>
+                <th scope="col">電話番号</th>
+                <th scope="col">地図</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">LITALICOワークス さいたま浦和</td>
+                <td class="address">埼玉県さいたま市中央区新中里1-3-3 埼大通りメディカルビル4F</td>
+                <td class="phone"><a href="tel:0488353047">048-835-3047</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県さいたま市中央区新中里1-3-3 埼大通りメディカルビル4F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 大宮</td>
+                <td class="address">埼玉県さいたま市大宮区下町1-42-2 TS-5BLDG. 5F</td>
+                <td class="phone"><a href="tel:0486580061">048-658-0061</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県さいたま市大宮区下町1-42-2 TS-5BLDG. 5F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 所沢</td>
+                <td class="address">埼玉県所沢市宮本町2-11-11 MOA5 1F</td>
+                <td class="phone"><a href="tel:0429295221">04-2929-5221</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県所沢市宮本町2-11-11 MOA5 1F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 南越谷</td>
+                <td class="address">埼玉県越谷市南越谷1-2875-2 南越谷ローヤルコーポ1F</td>
+                <td class="phone"><a href="tel:0489901538">048-990-1538</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県越谷市南越谷1-2875-2 南越谷ローヤルコーポ1F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 和光</td>
+                <td class="address">埼玉県和光市本町1-17 斎藤ビル3F</td>
+                <td class="phone"><a href="tel:0484524478">048-452-4478</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県和光市本町1-17 斎藤ビル3F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 大宮西口</td>
+                <td class="address">埼玉県さいたま市大宮区桜木町2-474 グランファースト大宮1F</td>
+                <td class="phone"><a href="tel:0486503601">048-650-3601</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県さいたま市大宮区桜木町2-474 グランファースト大宮1F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 川越</td>
+                <td class="address">埼玉県川越市脇田本町14-38 YKB川越 4F</td>
+                <td class="phone"><a href="tel:0492498705">049-249-8705</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県川越市脇田本町14-38 YKB川越 4F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 春日部</td>
+                <td class="address">埼玉県春日部市中央1-3-3 アーバンビル1F</td>
+                <td class="phone"><a href="tel:0487637412">048-763-7412</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県春日部市中央1-3-3 アーバンビル1F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 川口</td>
+                <td class="address">埼玉県川口市栄町3-1-14 川口三栄ビル6F D号室</td>
+                <td class="phone"><a href="tel:0482291210">048-229-1210</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県川口市栄町3-1-14 川口三栄ビル6F D号室" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 草加</td>
+                <td class="address">埼玉県草加市高砂2-9-2 アコス北館Nビル5F</td>
+                <td class="phone"><a href="tel:0489206821">048-920-6821</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県草加市高砂2-9-2 アコス北館Nビル5F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+              <tr>
+                <td class="name">LITALICOワークス 武蔵浦和</td>
+                <td class="address">埼玉県さいたま市南区沼影1-10-1 ラムザ4F</td>
+                <td class="phone"><a href="tel:0488299425">048-829-9425</a></td>
+                <td class="action"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=埼玉県さいたま市南区沼影1-10-1 ラムザ4F" target="_blank" rel="noopener noreferrer">地図を見る</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footer-note">※ 掲載内容はレイアウト調整済みです。印刷時はA4縦1ページに収まりやすい設定になっています。</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
