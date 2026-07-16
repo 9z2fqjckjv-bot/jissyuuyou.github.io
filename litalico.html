@@ -291,7 +291,7 @@
         background: #fff !important;
         color: #000 !important;
         border-bottom: 1px solid #000;
-        padding: 6mm 0 3mm !important;
+        padding: 3mm 0 2mm !important;
       }
 
       h1 {
@@ -310,7 +310,7 @@
       .content,
       .section {
         padding: 0;
-        margin-top: 3mm;
+        margin-top: 2mm;
       }
 
       .summary,
@@ -341,7 +341,7 @@
 
       .map-wrap iframe {
         min-height: 0 !important;
-        height: 100mm !important;
+        height: 75mm !important;
         width: 100% !important;
       }
 
@@ -374,10 +374,11 @@
         color: #000 !important;
       }
 
-      td:first-child,
-      th:first-child {
-        width: 22%;
-      }
+      th:nth-child(1), td:nth-child(1) { width: 6%; }
+      th:nth-child(2), td:nth-child(2) { width: 22%; }
+      th:nth-child(3), td:nth-child(3) { width: 34%; }
+      th:nth-child(4), td:nth-child(4) { width: 14%; }
+      th:nth-child(5), td:nth-child(5) { width: 24%; }
 
        .action {
       display: table-cell !important;
